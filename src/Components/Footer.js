@@ -32,7 +32,7 @@ function Footer({ sizeProps }) {
         active={true}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
-        children
+        START
       </FlipContainer>
     </Box>
   );

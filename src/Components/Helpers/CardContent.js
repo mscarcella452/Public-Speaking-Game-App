@@ -3,6 +3,7 @@ import { Textfit } from "react-textfit";
 import { Box } from "@mui/material";
 import { flexBoxSx, Sx } from "../../Styles/SXstyles";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
+import { pink } from "@mui/material/colors";
 
 function CardContent({ children }) {
   const screen = useContext(mediaQueryContext);
@@ -28,7 +29,15 @@ function CardContent({ children }) {
       <Textfit
         min={1}
         max={
-          screen.lg ? 60 : screen.md ? 45 : screen.sm ? 40 : screen.xs ? 28 : 35
+          screen.xl
+            ? 60
+            : screen.lg || screen.md
+            ? 45
+            : screen.sm
+            ? 40
+            : screen.xs
+            ? 28
+            : 35
         }
         throttle={100}
         // mode={"multi"}

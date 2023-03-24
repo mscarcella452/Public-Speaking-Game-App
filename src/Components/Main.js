@@ -4,6 +4,8 @@ import FlipContainer from "./Helpers/FlipContainer";
 import Logo from "./Helpers/Logo";
 import { Sx } from "../Styles/SXstyles";
 import GameCard from "./MainCard/GameCard";
+import RulesCard from "./MainCard/RulesCard";
+import IntermissionCard from "./MainCard/IntermissionCard";
 import Timer from "./Helpers/Timer";
 // active timer = game.status === "speech"
 function Main({ sizeProps }) {
@@ -21,10 +23,14 @@ function Main({ sizeProps }) {
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}
       >
-        <GameCard
+        {/* <GameCard
           mainContent={mainContent}
           timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+        /> */}
+        <IntermissionCard
+          timer={<Timer active={false} expire={triggerCompleteSpeech} />}
         />
+        {/* <RulesCard /> */}
       </FlipContainer>
     </Box>
   );
