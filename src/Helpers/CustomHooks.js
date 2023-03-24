@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 
 export function useToggle(initialValue) {
   const [state, setState] = useState(initialValue);
@@ -52,4 +55,21 @@ export function useGenerateText(initialValue, array) {
     setText(filteredTexts[randomIndex]);
   };
   return [text, textGenerator, usedIndex];
+}
+
+// ---------------------------------
+export function useToggleRulesBtnIcon(game, btnDispatch) {
+  const [rulesBtnIcon, setRulesBtnIcon] =
+    useState();
+    // <HelpCenterIcon sx={topButtonIconSx} />
+  const toggleRulesIcon = () => {
+    btnDispatch({ type: "TOGGLE_RULES_BTN" });
+    setTimeout(() => {
+      btnDispatch({ type: "TOGGLE_RULES_BTN" });
+      // game.rules
+      //   ? setRulesBtnIcon(<HelpCenterIcon sx={topButtonIconSx} />)
+      //   : setRulesBtnIcon(<KeyboardReturnIcon sx={topButtonIconSx} />);
+    }, 1200);
+  };
+  return [rulesBtnIcon, toggleRulesIcon];
 }

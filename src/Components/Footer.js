@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Paper, Box } from "@mui/material";
 import { marginSx, Sx } from "../Styles/SXstyles";
 import FlipContainer from "./Helpers/FlipContainer";
+import FooterButton from "./Helpers/FooterButton";
 
 function Footer({ sizeProps }) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
@@ -15,24 +16,24 @@ function Footer({ sizeProps }) {
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipProps={flipProps}
-        active={false}
+        active={true}
         backgroundPosition={wordsPositioning.bottomLeftSx}
       >
-        children
+        <FooterButton>Upgrade</FooterButton>
       </FlipContainer>
       <FlipContainer
         flipProps={flipProps}
-        active={false}
+        active={true}
         backgroundPosition={wordsPositioning.bottomCenterSx}
       >
-        children
+        <FooterButton>Fail</FooterButton>
       </FlipContainer>
       <FlipContainer
         flipProps={flipProps}
         active={true}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
-        START
+        <FooterButton>Next</FooterButton>
       </FlipContainer>
     </Box>
   );
