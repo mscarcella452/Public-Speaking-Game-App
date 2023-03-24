@@ -1,7 +1,3 @@
-import { useContext } from "react";
-
-import { mediaQueryContext } from "../Context/mediaQueryContext";
-
 export function screenSize(screen) {
   const appGap = screen.xl
     ? "3rem"
@@ -22,13 +18,6 @@ export function screenSize(screen) {
     : "1.25rem";
 
   const paddingPositioning = `calc( -${appPadding} - 3px )`;
-  const wordsPositioning = {
-    topLeftSx: { top: paddingPositioning, left: paddingPositioning },
-    topRightSx: { top: paddingPositioning, right: paddingPositioning },
-    bottomLeftSx: { bottom: paddingPositioning, left: paddingPositioning },
-    bottomCenterSx: { bottom: paddingPositioning },
-    bottomRightSx: { bottom: paddingPositioning, right: paddingPositioning },
-  };
 
   // header --------------------------------------------------------------
   const headerBoxHeight = screen.xl
@@ -129,6 +118,7 @@ export function screenSize(screen) {
     },
   };
 }
+// -----------------------------------------------
 
 // export function checkIntermission() {
 //   return !storage.fullVersion && storage.topicCount >= intermisisonTrigger

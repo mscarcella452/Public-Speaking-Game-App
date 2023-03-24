@@ -1,12 +1,11 @@
 import { Box } from "@mui/material";
-import { mainCardContainerSx } from "../../Styles/SXstyles";
+import { flexBoxSx, Sx } from "../../Styles/SXstyles";
+// import { mainCardContainerSx } from "../../Styles/SXstyles";
 import TopCardMargin from "../Helpers/TopCardMargin";
 import CardContent from "../Helpers/CardContent";
-import { ColorOverlay, FabricOverlay } from "../Helpers/Overlays";
+// import { ColorOverlay, FabricOverlay } from "../Helpers/Overlays";
 
-//   timer, label, mainContent, backgroundColor;
-
-function GameCard() {
+function GameCard({ timer, label, mainContent, backgroundColor }) {
   return (
     <Box
       sx={{
@@ -14,10 +13,10 @@ function GameCard() {
         backgroundColor: backgroundColor,
       }}
     >
-      {/* <ColorOverlay />
-      <TopCardMargin label={hi} timer={time} />
+      {/* <ColorOverlay /> */}
+      <TopCardMargin label={"Topic:"} timer={timer} />
       <CardContent>{mainContent}</CardContent>
-      <FabricOverlay /> */}
+      {/* <FabricOverlay /> */}
     </Box>
   );
 }

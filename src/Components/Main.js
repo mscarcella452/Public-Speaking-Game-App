@@ -4,20 +4,27 @@ import FlipContainer from "./Helpers/FlipContainer";
 import { flipContainerMainSx } from "../Styles/FlipContainerStyles";
 import Logo from "./Helpers/Logo";
 import { Sx } from "../Styles/SXstyles";
-
+import GameCard from "./MainCard/GameCard";
+import Timer from "./Helpers/Timer";
+// active timer = game.status === "speech"
 function Main({ sizeProps }) {
   const { height, width, wordsPositioning } = sizeProps;
+  const mainContent =
+    "The similarities of playing the Oregon Trail pc game on its highest difficluts, and the real life Oregon Trail.";
 
+  const triggerCompleteSpeech = () => console.log("timer please expire now");
   return (
     <Box sx={{ ...mainSx, maxHeight: height, maxWidth: width }}>
       <FlipContainer
         flipContainerSx={flipContainerMainSx}
-        active={false}
+        active={true}
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}
       >
-        The similarities of playing the "Oregon Trail" pc game on its highest
-        difficulty, and the real life Oregon Trail.
+        <GameCard
+          mainContent={mainContent}
+          timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+        />
       </FlipContainer>
     </Box>
   );

@@ -6,7 +6,6 @@ import FlipContainer from "./Helpers/FlipContainer";
 
 function Footer({ sizeProps }) {
   const { height, wordsPositioning } = sizeProps;
-  console.log(wordsPositioning);
 
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
