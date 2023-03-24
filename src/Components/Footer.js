@@ -3,24 +3,13 @@ import { Paper, Box } from "@mui/material";
 import { marginSx } from "../Styles/SXstyles";
 import { flipContainerFooterSx } from "../Styles/FlipContainerStyles";
 import FlipContainer from "./Helpers/FlipContainer";
-import { mediaQueryContext } from "../Context/mediaQueryContext";
 
-function Footer({ wordsPositioning }) {
-  const screen = useContext(mediaQueryContext);
-  const boxHeight = screen.xl
-    ? "70px"
-    : screen.lg
-    ? "60px"
-    : screen.md
-    ? "60px"
-    : screen.sm
-    ? "55px"
-    : screen.xs
-    ? "35px"
-    : "50px";
+function Footer({ sizeProps }) {
+  const { height, wordsPositioning } = sizeProps;
+  console.log(wordsPositioning);
 
   return (
-    <Box sx={{ ...marginSx, height: boxHeight, minHeight: boxHeight }}>
+    <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipContainerSx={flipContainerFooterSx}
         active={false}

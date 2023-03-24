@@ -1,5 +1,5 @@
 import { useContext } from "react";
-// import { Textfit } from "react-textfit";
+import { Textfit } from "react-textfit";
 import { Paper, Box } from "@mui/material";
 import { flexBoxSx, Sx, absolutePositionSx } from "../../Styles/SXstyles";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
@@ -23,12 +23,12 @@ function Logo() {
               : "110px",
         }}
       />
-      <Box
+      <Textfit
         min={1}
         max={180}
         style={{
           ...flexBoxSx,
-          zIndex: 5,
+          zIndex: 1,
           padding: screen.xl || screen.lg || screen.md ? "1.5rem" : "1.25rem",
           textShadow:
             screen.xl || screen.lg || screen.md
@@ -37,7 +37,7 @@ function Logo() {
         }}
       >
         Public Speaking
-      </Box>
+      </Textfit>
     </Paper>
   );
 }

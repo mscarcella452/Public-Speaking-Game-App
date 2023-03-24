@@ -60,7 +60,7 @@ const fabricSx = {
   backgroundSize: { galaxyFold: "70%", xs: "40%", lg: "20%" },
   backgroundPosition: "center",
   backgroundRepeat: "repeat",
-  opacity: 0.65,
+  opacity: 0.55,
   zIndex: 2,
 };
 
