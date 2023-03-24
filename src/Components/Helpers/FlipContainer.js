@@ -1,31 +1,43 @@
-import React from "react";
+import { useContext } from "react";
 import { Paper, Box } from "@mui/material";
 import backgroundWords from "../../Images/backgroundWords.png";
+import { mediaQueryContext } from "../../Context/mediaQueryContext";
+import { flipPadding } from "../../Helpers/FunctionHelpers";
+import { flexBoxSx, Sx, absolutePositionSx } from "../../Styles/SXstyles";
 
 function FlipContainer({
-  flipContainerSx,
+  flipProps,
   active,
   backgroundPosition,
   Logo,
   children,
 }) {
+  const screen = useContext(mediaQueryContext);
+  const padding = flipPadding(screen);
+  const { width, borderRadius, backgroundColor } = flipProps;
+
   return (
     <Box
       sx={{
-        ...flipContainerSx.container,
+        ...containerSx,
+        width: width,
+        padding: padding,
+        borderRadius: borderRadius,
       }}
     >
       {/* FlipBox Inner */}
       <Box
         sx={{
-          ...flipContainerSx.inner,
+          ...flipBoxInnerSx,
+          borderRadius: borderRadius,
           transform: active && "rotateX(180deg)",
         }}
       >
         {/* FrontFlip */}
         <Box
           sx={{
-            ...flipContainerSx.front,
+            ...frontFlipSx,
+            borderRadius: borderRadius,
           }}
         >
           <Box
@@ -37,10 +49,16 @@ function FlipContainer({
           {Logo}
         </Box>
         {/* BackFlip */}
-        <Box sx={flipContainerSx.back}>
+        <Box
+          sx={{
+            ...backFlipSx,
+            borderRadius: borderRadius,
+            backgroundColor: backgroundColor,
+          }}
+        >
           {/* fabric overlay */}
           {/* <Paper elevation={1} sx={fabricSx} /> */}
-          <Paper elevation={1} sx={flipContainerSx.fabric} />
+          {/* <Paper elevation={1} sx={flipContainerSx.fabric} /> */}
           {children}
         </Box>
       </Box>
@@ -50,12 +68,16 @@ function FlipContainer({
 
 export default FlipContainer;
 
+const fabricOverlaySx = {
+  ...absolutePositionSx,
+  zIndex: 7,
+  opacity: 0.4,
+  background: `url("https://www.transparenttextures.com/patterns/navy.png") repeat center`,
+  backgroundSize: { galaxyFold: "100%", sm: "75%", lg: "50%" },
+};
+
 const fabricSx = {
-  position: "absolute",
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
+  ...absolutePositionSx,
   background: `url("https://www.transparenttextures.com/patterns/navy.png")`,
   backgroundSize: { galaxyFold: "70%", xs: "40%", lg: "20%" },
   backgroundPosition: "center",
@@ -77,4 +99,39 @@ const backgroundWordsSx = {
     content: '""',
     ...fabricSx,
   },
+};
+
+const containerSx = {
+  ...flexBoxSx,
+  position: "relative",
+  background: "rgb(15, 15, 15)",
+  border: ".25px solid #333",
+};
+
+const flipBoxInnerSx = {
+  width: "100%",
+  height: "100%",
+  transition: "transform 1.5s",
+  transformStyle: "preserve-3d",
+  position: "relative",
+  backgroundColor: Sx.color.primary,
+  color: "#fff",
+  fontFamily: Sx.font.display,
+  boxShadow:
+    "-1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1.5px 0 #333",
+};
+
+const frontFlipSx = {
+  ...flexBoxSx,
+  position: "absolute",
+  backfaceVisibility: "hidden",
+  overflow: "hidden",
+};
+
+const backFlipSx = {
+  ...frontFlipSx,
+  transform: "rotateX(180deg)",
+  position: "relative",
+  zIndex: 20,
+  color: "#fff",
 };

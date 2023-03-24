@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { Box } from "@mui/system";
 import FlipContainer from "./Helpers/FlipContainer";
-import { flipContainerMainSx } from "../Styles/FlipContainerStyles";
 import Logo from "./Helpers/Logo";
 import { Sx } from "../Styles/SXstyles";
 import GameCard from "./MainCard/GameCard";
 import Timer from "./Helpers/Timer";
 // active timer = game.status === "speech"
 function Main({ sizeProps }) {
-  const { height, width, wordsPositioning } = sizeProps;
+  const { height, width, borderRadius, wordsPositioning } = sizeProps;
+
   const mainContent =
     "The similarities of playing the Oregon Trail pc game on its highest difficluts, and the real life Oregon Trail.";
 
@@ -16,7 +16,7 @@ function Main({ sizeProps }) {
   return (
     <Box sx={{ ...mainSx, maxHeight: height, maxWidth: width }}>
       <FlipContainer
-        flipContainerSx={flipContainerMainSx}
+        flipProps={{ borderRadius }}
         active={true}
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}

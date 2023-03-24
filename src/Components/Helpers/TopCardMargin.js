@@ -9,38 +9,51 @@ function TopCardMargin({ label, timer }) {
   //   const game = useContext(gameContext);
   const screen = useContext(mediaQueryContext);
 
-  const marginHeight = screen.lg
-    ? "70px"
+  const marginHeight = screen.xl
+    ? "80px"
+    : screen.lg
+    ? "60px"
     : screen.md
-    ? { galaxyFold: "50px", lg: "50px" }
+    ? "55px"
     : screen.sm
-    ? "45px"
+    ? "50px"
     : screen.xs
     ? "35px"
     : "40px";
-  const componentWidth = screen.lg
+  const componentWidth = screen.xl
     ? "170px"
+    : screen.lg
+    ? "150px"
     : screen.md
     ? "140px"
     : screen.sm
-    ? "100px"
+    ? "110px"
     : screen.xs
     ? "75px"
     : "90px";
-  const defaultFontSize = screen.lg
-    ? 75
-    : screen.md
+  const defaultFontSize = screen.xl
+    ? 70
+    : screen.lg || screen.md
     ? 55
     : screen.sm
     ? 45
     : screen.xs
     ? 35
     : 40;
+
+  const boxShadow = screen.xl
+    ? `-3.5px 3.5px 0 #000, 1px -3.5px 0 #000, -1px 3.5px 0 #000, 1px 3.5px 0 #000`
+    : screen.lg || screen.md || screen.sm
+    ? `-2.5px 2.5px 0 #000, 1px -2.5px 0 #000, -1px 2.5px 0 #000, 1px 2.5px 0 #000`
+    : `-1.5px 1.5px 0 #000, 1px -1.5px 0 #000, -1px 1.5px 0 #000, 1px 1.5px 0 #000`;
+
+  const timerFontSize = screen.xl ? 50 : screen.lg || screen.md ? 35 : 30;
   return (
     <Box
       sx={{
         ...CardMarginSx,
         height: marginHeight,
+        // background: "pink",
       }}
     >
       <Box
@@ -82,10 +95,10 @@ function TopCardMargin({ label, timer }) {
           </Textfit>
         </Paper>
       )} */}
-      <Paper sx={{ ...timerSx, width: componentWidth }}>
+      <Paper sx={{ ...timerSx, width: componentWidth, boxShadow: boxShadow }}>
         <Textfit
           min={1}
-          max={30}
+          max={timerFontSize}
           forceSingleModeWidth={false}
           throttle={100}
           mode={"single"}
@@ -105,7 +118,6 @@ const CardMarginSx = { ...flexBoxSx, justifyContent: "space-between" };
 const timerSx = {
   ...flexBoxSx,
   height: "90%",
-  boxShadow: `-2.5px 2.5px 0 #000, 1px -2.5px 0 #000, -1px 2.5px 0 #000, 1px 2.5px 0 #000`,
   fontFamily: Sx.font.number,
   fontWeight: "bold",
   background: Sx.color.primary,

@@ -1,4 +1,5 @@
 export function screenSize(screen) {
+  const flipBoxPadding = flipPadding(screen);
   const appGap = screen.xl
     ? "3rem"
     : screen.lg
@@ -17,7 +18,7 @@ export function screenSize(screen) {
     ? "1rem"
     : "1.25rem";
 
-  const paddingPositioning = `calc( -${appPadding} - 3px )`;
+  const paddingPositioning = `calc( -${appPadding} - ${flipBoxPadding} )`;
 
   // header --------------------------------------------------------------
   const headerBoxHeight = screen.xl
@@ -36,6 +37,12 @@ export function screenSize(screen) {
     : screen.xs
     ? "40px"
     : "45px";
+
+  const defaultRadius = screen.xl
+    ? "5px"
+    : screen.lg || screen.md || screen.sm
+    ? "4px"
+    : "3px";
 
   // mainBox --------------------------------------------------------------
   const mainBoxHeight = screen.xl
@@ -62,6 +69,9 @@ export function screenSize(screen) {
     ? "100%"
     : "100%";
 
+  const mainRadius =
+    screen.xl || screen.lg || screen.md || screen.sm ? "5px" : "4px";
+
   // for top background words positioning on mainBox --> footer height - header height
   const footerHeaderDifference =
     screen.xl || screen.lg || screen.md
@@ -83,6 +93,9 @@ export function screenSize(screen) {
     ? "35px"
     : "50px";
 
+  const footerBoxWidth =
+    screen.xl || screen.lg || screen.md ? "200px" : screen.xs ? "30%" : "33%";
+
   return {
     padding: appPadding,
     gap: appGap,
@@ -90,6 +103,7 @@ export function screenSize(screen) {
     header: {
       height: headerBoxHeight,
       width: headerBoxWidth,
+      borderRadius: defaultRadius,
       wordsPositioning: {
         topLeftSx: { top: paddingPositioning, left: paddingPositioning },
         topRightSx: { top: paddingPositioning, right: paddingPositioning },
@@ -99,6 +113,7 @@ export function screenSize(screen) {
     main: {
       height: mainBoxHeight,
       width: mainBoxWidth,
+      borderRadius: mainRadius,
       wordsPositioning: {
         left: `calc(((100vw - 100% ) / 2) * -1)`,
         top: `calc(((100vh - 100% - ${footerHeaderDifference}) / 2) * -1)`,
@@ -107,6 +122,8 @@ export function screenSize(screen) {
 
     footer: {
       height: footerBoxHeight,
+      width: footerBoxWidth,
+      borderRadius: defaultRadius,
       wordsPositioning: {
         bottomLeftSx: { bottom: paddingPositioning, left: paddingPositioning },
         bottomCenterSx: { bottom: paddingPositioning },
@@ -118,6 +135,31 @@ export function screenSize(screen) {
     },
   };
 }
+// -----------------------------------------------
+export function flipPadding(screen) {
+  const padding = screen.xl
+    ? "4px"
+    : screen.lg || screen.md || screen.sm
+    ? "3px"
+    : "2px";
+
+  return padding;
+}
+export function flipBorderRadius(screen) {
+  const headerRadius = screen.xl
+    ? "3px"
+    : screen.lg || screen.md || screen.sm
+    ? "2.5px"
+    : "2px";
+  const defaultRadius =
+    screen.xl || screen.lg || screen.md || screen.sm ? "5px" : "4px";
+
+  return {
+    header: headerRadius,
+    default: defaultRadius,
+  };
+}
+
 // -----------------------------------------------
 
 // export function checkIntermission() {

@@ -1,30 +1,34 @@
 import { useContext } from "react";
 import { Paper, Box } from "@mui/material";
-import { marginSx } from "../Styles/SXstyles";
-import { flipContainerFooterSx } from "../Styles/FlipContainerStyles";
+import { marginSx, Sx } from "../Styles/SXstyles";
 import FlipContainer from "./Helpers/FlipContainer";
 
 function Footer({ sizeProps }) {
-  const { height, wordsPositioning } = sizeProps;
+  const { height, width, borderRadius, wordsPositioning } = sizeProps;
+  const flipProps = {
+    width,
+    borderRadius,
+    backgroundColor: Sx.color.secondary,
+  };
 
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
-        flipContainerSx={flipContainerFooterSx}
+        flipProps={flipProps}
         active={false}
         backgroundPosition={wordsPositioning.bottomLeftSx}
       >
         children
       </FlipContainer>
       <FlipContainer
-        flipContainerSx={flipContainerFooterSx}
+        flipProps={flipProps}
         active={false}
         backgroundPosition={wordsPositioning.bottomCenterSx}
       >
         children
       </FlipContainer>
       <FlipContainer
-        flipContainerSx={flipContainerFooterSx}
+        flipProps={flipProps}
         active={true}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >

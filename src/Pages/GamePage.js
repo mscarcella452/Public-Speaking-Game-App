@@ -6,11 +6,12 @@ import Footer from "../Components/Footer";
 import Main from "../Components/Main";
 import backgroundWords from "../Images/backgroundWords.png";
 import { mediaQueryContext } from "../Context/mediaQueryContext";
-import { screenSize } from "../Helpers/FunctionHelpers";
+import { screenSize, flipBorderRadius } from "../Helpers/FunctionHelpers";
 
 function GamePage() {
   const screen = useContext(mediaQueryContext);
   const size = screenSize(screen);
+  const borderRadius = flipBorderRadius(screen);
 
   return (
     <Paper
