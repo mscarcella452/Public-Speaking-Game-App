@@ -32,3 +32,11 @@ export const absolutePositionSx = {
   right: 0,
   left: 0,
 };
+
+export const marginSx = {
+  zIndex: 2,
+  ...flexBoxSx,
+  justifyContent: "space-between",
+  gap: "1.5rem",
+  width: "100%",
+};
