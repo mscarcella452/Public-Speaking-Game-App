@@ -28,14 +28,24 @@ function Main({ game, sizeProps }) {
         {game.rules && <RulesCard />}
         {!game.rules && game.status === "intermission" && (
           <IntermissionCard
-            timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+            timer={
+              <Timer
+                active={game.status === "intermission"}
+                expire={triggerCompleteSpeech}
+              />
+            }
           />
         )}
 
         {!game.rules && game.status !== "intermission" && (
           <GameCard
             mainContent={mainContent}
-            timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+            timer={
+              <Timer
+                active={game.status === "speech"}
+                expire={triggerCompleteSpeech}
+              />
+            }
           />
         )}
       </FlipContainer>

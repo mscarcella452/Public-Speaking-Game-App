@@ -8,6 +8,7 @@ import backgroundWords from "../Images/backgroundWords.png";
 import { mediaQueryContext } from "../Context/mediaQueryContext";
 import { screenSize, flipBorderRadius } from "../Helpers/FunctionHelpers";
 import { gameContext, gameDispatchContext } from "../Context/GameStatusContext";
+import { timerDispatchContext } from "../Context/TimerContext";
 
 function GamePage() {
   const screen = useContext(mediaQueryContext);
@@ -36,19 +37,6 @@ function GamePage() {
       func();
       gameDispatch({ type: "LOAD" });
     }
-    // if (flip === "flipFirst") {
-    //   gameDispatch({ type: "LOAD" });
-    //   setTimeout(() => func(), 1250);
-    // } else if (flip === "flipSandwich") {
-    //   gameDispatch({ type: "LOAD" });
-    //   setTimeout(() => {
-    //     func();
-    //     gameDispatch({ type: "LOAD" });
-    //   }, 1250);
-    // } else {
-    //   func();
-    //   gameDispatch({ type: "LOAD" });
-    // }
   }
 
   return (

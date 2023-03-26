@@ -52,8 +52,6 @@ function Header({ game, load, sizeProps }) {
     gameDispatch({ type: "GAME_OFF" });
   }
 
-  console.log(game.status, game.rules);
-
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
