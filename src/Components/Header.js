@@ -8,6 +8,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import { useToggleRulesBtnIcon } from "../Helpers/CustomHooks";
+import { gameDispatchContext } from "../Context/GameStatusContext";
 
 const topButtonIconSx = {
   fontSize: {
@@ -22,7 +23,8 @@ const topButtonIconSx = {
   "@media (min-height: 1024px)": { fontSize: "40px" },
 };
 
-function Header({ sizeProps }) {
+function Header({ game, load, sizeProps }) {
+  const gameDispatch = useContext(gameDispatchContext);
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
   const flipProps = { width, borderRadius };
   //  const [rulesBtnIcon, toggleRulesIcon] = useToggleRulesBtnIcon(
@@ -33,14 +35,33 @@ function Header({ sizeProps }) {
     <HelpCenterIcon sx={topButtonIconSx} />
   );
 
+  function toggleRules() {
+    gameDispatch({ type: "TOGGLE_RULES" });
+  }
+
+  function handleRules() {
+    if (game.status === "off") {
+      !game.rules ? load(toggleRules) : load(toggleRules, "delay");
+    } else {
+      load(toggleRules, "toggleFlip");
+      // gameDispatch({ type: "LOAD" });
+    }
+  }
+
+  function handleQuit() {
+    gameDispatch({ type: "GAME_OFF" });
+  }
+
+  console.log(game.status, game.rules);
+
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipProps={flipProps}
-        active={true}
+        active={game.status !== "off"}
         backgroundPosition={wordsPositioning.topLeftSx}
       >
-        <Button sx={topBtnSx}>
+        <Button sx={topBtnSx} onClick={handleQuit}>
           <DisabledByDefaultIcon sx={topButtonIconSx} />
         </Button>
       </FlipContainer>
@@ -49,7 +70,9 @@ function Header({ sizeProps }) {
         active={true}
         backgroundPosition={wordsPositioning.topRightSx}
       >
-        <Button sx={topBtnSx}>{rulesBtnIcon}</Button>
+        <Button sx={topBtnSx} onClick={handleRules}>
+          {rulesBtnIcon}
+        </Button>
       </FlipContainer>
     </Box>
   );

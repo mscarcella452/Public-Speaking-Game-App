@@ -7,11 +7,49 @@ import Main from "../Components/Main";
 import backgroundWords from "../Images/backgroundWords.png";
 import { mediaQueryContext } from "../Context/mediaQueryContext";
 import { screenSize, flipBorderRadius } from "../Helpers/FunctionHelpers";
+import { gameContext, gameDispatchContext } from "../Context/GameStatusContext";
 
 function GamePage() {
   const screen = useContext(mediaQueryContext);
+  const game = useContext(gameContext);
+  const gameDispatch = useContext(gameDispatchContext);
   const size = screenSize(screen);
-  const borderRadius = flipBorderRadius(screen);
+
+  const footerActive = {
+    leftBtn: game.status === "Topic" && game.flip,
+    centerBtn: game.status === "Topic" && game.flip,
+  };
+
+  function load(func, flip) {
+    if (flip === "toggleFlip") {
+      gameDispatch({ type: "LOAD" });
+      setTimeout(() => {
+        func();
+        gameDispatch({ type: "LOAD" });
+      }, 1250);
+    } else if (flip === "delay") {
+      gameDispatch({ type: "LOAD" });
+      setTimeout(() => {
+        func();
+      }, 1250);
+    } else {
+      func();
+      gameDispatch({ type: "LOAD" });
+    }
+    // if (flip === "flipFirst") {
+    //   gameDispatch({ type: "LOAD" });
+    //   setTimeout(() => func(), 1250);
+    // } else if (flip === "flipSandwich") {
+    //   gameDispatch({ type: "LOAD" });
+    //   setTimeout(() => {
+    //     func();
+    //     gameDispatch({ type: "LOAD" });
+    //   }, 1250);
+    // } else {
+    //   func();
+    //   gameDispatch({ type: "LOAD" });
+    // }
+  }
 
   return (
     <Paper
@@ -21,11 +59,11 @@ function GamePage() {
         gap: size.gap,
       }}
     >
-      <Header sizeProps={size.header} />
+      <Header game={game} load={load} sizeProps={size.header} />
 
-      <Main sizeProps={size.main} />
+      <Main sizeProps={size.main} game={game} />
 
-      <Footer sizeProps={size.footer} />
+      <Footer game={game} load={load} sizeProps={size.footer} />
     </Paper>
   );
 }

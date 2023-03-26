@@ -4,10 +4,11 @@ import { Box, Button } from "@mui/material";
 import { flexBoxSx, Sx } from "../../Styles/SXstyles";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
 
-function FooterButton({ children }) {
+function FooterButton({ onClick, children }) {
   const screen = useContext(mediaQueryContext);
   return (
     <Button
+      onClick={onClick}
       sx={{
         ...flexBoxSx,
         fontFamily: Sx.font.display,

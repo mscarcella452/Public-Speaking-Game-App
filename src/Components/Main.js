@@ -8,7 +8,7 @@ import RulesCard from "./MainCard/RulesCard";
 import IntermissionCard from "./MainCard/IntermissionCard";
 import Timer from "./Helpers/Timer";
 // active timer = game.status === "speech"
-function Main({ sizeProps }) {
+function Main({ game, sizeProps }) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
   // const [footerRTBtn, setFooterRtBtn] = useState('PLAY')
   // const [footerLTBtn, setFooterLtBtn] = useState('START')
@@ -21,18 +21,23 @@ function Main({ sizeProps }) {
     <Box sx={{ ...mainSx, maxHeight: height, maxWidth: width }}>
       <FlipContainer
         flipProps={{ borderRadius }}
-        active={true}
+        active={game.flip}
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}
       >
-        {/* <GameCard
-          mainContent={mainContent}
-          timer={<Timer active={false} expire={triggerCompleteSpeech} />}
-        /> */}
-        <IntermissionCard
-          timer={<Timer active={false} expire={triggerCompleteSpeech} />}
-        />
-        {/* <RulesCard /> */}
+        {game.rules && <RulesCard />}
+        {!game.rules && game.status === "intermission" && (
+          <IntermissionCard
+            timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+          />
+        )}
+
+        {!game.rules && game.status !== "intermission" && (
+          <GameCard
+            mainContent={mainContent}
+            timer={<Timer active={false} expire={triggerCompleteSpeech} />}
+          />
+        )}
       </FlipContainer>
     </Box>
   );
