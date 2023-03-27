@@ -1,12 +1,15 @@
 import MediaQueryContextProvider from "./mediaQueryContext";
 import TimerContextProvider from "./TimerContext";
 import GameStatusProvider from "./GameStatusContext";
+import StorageProvider from "./StorageContext";
 
 function GameContext({ children }) {
   return (
     <MediaQueryContextProvider>
       <TimerContextProvider>
-        <GameStatusProvider>{children}</GameStatusProvider>
+        <StorageProvider>
+          <GameStatusProvider>{children}</GameStatusProvider>
+        </StorageProvider>
       </TimerContextProvider>
     </MediaQueryContextProvider>
   );

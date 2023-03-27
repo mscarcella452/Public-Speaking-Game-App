@@ -6,7 +6,13 @@ import FooterButton from "./Helpers/FooterButton";
 import { gameDispatchContext } from "../Context/GameStatusContext";
 import { timerDispatchContext } from "../Context/TimerContext";
 
-function Footer({ game, toggleTimer, load, sizeProps }) {
+function Footer({
+  game,
+  handleStartRound,
+  triggerFailedSpeech,
+  load,
+  sizeProps,
+}) {
   const gameDispatch = useContext(gameDispatchContext);
   const timerDispatch = useContext(timerDispatchContext);
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
@@ -17,9 +23,7 @@ function Footer({ game, toggleTimer, load, sizeProps }) {
   };
 
   // dispatch functions
-  const showTopic = () => gameDispatch({ type: "TOPIC_STATUS" });
   const startSpeech = () => gameDispatch({ type: "SPEECH_STATUS" });
-  const dispatchFail = () => gameDispatch({ type: "RESULT_STATUS" });
 
   // bottomLefttBtn
   function handleBoxLeft() {
@@ -31,15 +35,8 @@ function Footer({ game, toggleTimer, load, sizeProps }) {
 
   // middleButton
   function handleFailSpeech() {
-    load(dispatchFail, "toggleFlip");
+    load(triggerFailedSpeech, "toggleFlip");
     timerDispatch({ type: "RESET" });
-  }
-
-  // bottomRightBtn
-  // const startGame = () => load(showTopic);
-  function handleBoxRight() {
-    // load topic
-    game.status === "off" ? load(showTopic) : load(showTopic, "toggleFlip");
   }
 
   return (
@@ -63,7 +60,7 @@ function Footer({ game, toggleTimer, load, sizeProps }) {
         active={game.status === "off" || game.status === "result"}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
-        <FooterButton onClick={handleBoxRight}>Play</FooterButton>
+        <FooterButton onClick={handleStartRound}>Play</FooterButton>
       </FlipContainer>
     </Box>
   );

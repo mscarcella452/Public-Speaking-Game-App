@@ -8,13 +8,13 @@ import RulesCard from "./MainCard/RulesCard";
 import IntermissionCard from "./MainCard/IntermissionCard";
 import Timer from "./Helpers/Timer";
 // active timer = game.status === "speech"
-function Main({ game, sizeProps }) {
+function Main({ game, mainContent, completeSpeech, sizeProps }) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
   // const [footerRTBtn, setFooterRtBtn] = useState('PLAY')
   // const [footerLTBtn, setFooterLtBtn] = useState('START')
 
-  const mainContent =
-    "The similarities of playing the Oregon Trail pc game on its highest difficluts, and the real life Oregon Trail.";
+  // const mainContent =
+  //   "The similarities of playing the Oregon Trail pc game on its highest difficluts, and the real life Oregon Trail.";
 
   const triggerCompleteSpeech = () => console.log("timer please expire now");
   return (
@@ -43,7 +43,7 @@ function Main({ game, sizeProps }) {
             timer={
               <Timer
                 active={game.status === "speech"}
-                expire={triggerCompleteSpeech}
+                expire={completeSpeech}
               />
             }
           />

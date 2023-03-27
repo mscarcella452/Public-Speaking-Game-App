@@ -1,4 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { speechTopics } from "../GeneratedText/SpeechTopics";
+import { successTidbits, failTidbits } from "../GeneratedText/ResultTidbits";
+import { storageDispatchContext } from "../Context/StorageContext";
+
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
@@ -33,7 +37,7 @@ export function useInterval(callback, delay) {
 }
 
 // ------------------------------------------------
-export function useGenerateText(initialValue, array) {
+function useGenerateText(initialValue, array) {
   const [usedIndex, setUsedIndex] = useState(initialValue);
   const [text, setText] = useState("");
 
@@ -57,11 +61,30 @@ export function useGenerateText(initialValue, array) {
   return [text, textGenerator, usedIndex];
 }
 
+export function useTopic(storage) {
+  const [currentTopic, topicGenerator, usedTopicIndex] = useGenerateText(
+    storage.topicIndex,
+    speechTopics
+  );
+
+  return [currentTopic, topicGenerator, usedTopicIndex];
+}
+export function useTidbit(storage, failedSpeech) {
+  let index = failedSpeech ? storage.failIndex : storage.successIndex;
+  let tidbits = failedSpeech ? failTidbits : successTidbits;
+
+  const [currentTidbit, tidbitGenerator, usedTidbitIndex] = useGenerateText(
+    index,
+    tidbits
+  );
+
+  return [currentTidbit, tidbitGenerator, usedTidbitIndex];
+}
+
 // ---------------------------------
 export function useToggleRulesBtnIcon(game, btnDispatch) {
-  const [rulesBtnIcon, setRulesBtnIcon] =
-    useState();
-    // <HelpCenterIcon sx={topButtonIconSx} />
+  const [rulesBtnIcon, setRulesBtnIcon] = useState();
+  // <HelpCenterIcon sx={topButtonIconSx} />
   const toggleRulesIcon = () => {
     btnDispatch({ type: "TOGGLE_RULES_BTN" });
     setTimeout(() => {
