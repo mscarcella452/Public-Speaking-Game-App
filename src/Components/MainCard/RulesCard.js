@@ -51,7 +51,7 @@ function RulesCard() {
             gap: screen.xl
               ? "1.5rem"
               : screen.lg || screen.md
-              ? { xs: "1.15rem", lg: ".75rem", xl: "1.55rem" }
+              ? { xs: "1.15rem", lg: ".75rem", xl: "1rem" }
               : screen.sm
               ? "1.15rem"
               : screen.xs

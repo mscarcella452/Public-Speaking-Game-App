@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo, useEffect, useCallback } from "react";
 import { useTopic, useTidbit } from "../Helpers/CustomHooks";
+import { intermisisonTrigger } from "../Context/StorageContext";
 import { Paper, Box } from "@mui/material";
 import { flexBoxSx, Sx, absolutePositionSx } from "../Styles/SXstyles";
 import Header from "../Components/Header";
@@ -23,12 +24,7 @@ function GamePage() {
   const [failSpeech, setFailSpeech] = useState(true);
   const [topic, getTopic, usedTopicIndex] = useTopic(storage);
   const [tidbit, getTidbit, usedTidbitIndex] = useTidbit(storage, failSpeech);
-  const size = screenSize(screen);
-
-  const footerActive = {
-    leftBtn: game.status === "Topic" && game.flip,
-    centerBtn: game.status === "Topic" && game.flip,
-  };
+  const size = useMemo(() => screenSize(screen), [screen]);
 
   function load(func, flip) {
     if (flip === "toggleFlip") {
@@ -46,16 +42,24 @@ function GamePage() {
     }
   }
 
+  const checkIntermission = () => {
+    return !storage.fullVersion && storage.topicCount >= intermisisonTrigger
+      ? true
+      : false;
+  };
+
+  // const triggerIntermission = () => {};
+
   function startRound() {
-    const showTopic = () => gameDispatch({ type: "TOPIC_STATUS" });
     getTopic();
-    storageDispatch({ type: "TURN_COUNT", payload: usedTopicIndex });
+    const showTopic = () => gameDispatch({ type: "TOPIC_STATUS" });
     game.status === "off" ? load(showTopic) : load(showTopic, "toggleFlip");
   }
 
-  function endRound(updateType) {
+  function endRound(updateIndexType) {
     getTidbit();
-    storageDispatch({ type: updateType, payload: usedTidbitIndex });
+    storageDispatch({ type: "TURN_COUNT", payload: usedTopicIndex });
+    storageDispatch({ type: updateIndexType, payload: usedTidbitIndex });
     gameDispatch({ type: "RESULT_STATUS" });
   }
 
@@ -73,7 +77,10 @@ function GamePage() {
     endRound("UPDATE_SUCCESS_INDEX");
   }
 
-  const mainContent = game.status !== "result" ? topic : tidbit;
+  // const mainContent = game.status !== "result" ? topic : tidbit;
+  const mainContent = useMemo(() => {
+    return game.status !== "result" ? topic : tidbit;
+  }, [tidbit, topic, game.status]);
 
   return (
     <Paper

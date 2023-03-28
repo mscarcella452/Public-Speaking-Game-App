@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { Paper, Box } from "@mui/material";
-import { marginSx, Sx } from "../Styles/SXstyles";
+import { useContext, memo, useEffect, useMemo } from "react";
+import { Paper, Box, Button } from "@mui/material";
+import { marginSx, Sx, flexBoxSx } from "../Styles/SXstyles";
 import FlipContainer from "./Helpers/FlipContainer";
-import FooterButton from "./Helpers/FooterButton";
+import FooterBtnText from "./Helpers/FooterBtnText";
 import { gameDispatchContext } from "../Context/GameStatusContext";
 import { timerDispatchContext } from "../Context/TimerContext";
 
@@ -16,11 +16,13 @@ function Footer({
   const gameDispatch = useContext(gameDispatchContext);
   const timerDispatch = useContext(timerDispatchContext);
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
-  const flipProps = {
-    width,
-    borderRadius,
-    backgroundColor: Sx.color.secondary,
-  };
+  const flipProps = useMemo(() => {
+    return { width, borderRadius, backgroundColor: Sx.color.secondary };
+  }, [sizeProps]);
+
+  // useEffect(() => {
+  //   console.log("triggerFailedSpeech changed");
+  // }, [triggerFailedSpeech]);
 
   // dispatch functions
   const startSpeech = () => gameDispatch({ type: "SPEECH_STATUS" });
@@ -46,24 +48,38 @@ function Footer({
         active={game.status === "topic"}
         backgroundPosition={wordsPositioning.bottomLeftSx}
       >
-        <FooterButton onClick={handleBoxLeft}>Start</FooterButton>
+        <Button onClick={handleBoxLeft} sx={footerBtnSx}>
+          <FooterBtnText>Start</FooterBtnText>
+        </Button>
       </FlipContainer>
       <FlipContainer
         flipProps={flipProps}
-        active={game.status === "speech" && game.flip}
+        active={game.status === "speech"}
         backgroundPosition={wordsPositioning.bottomCenterSx}
       >
-        <FooterButton onClick={handleFailSpeech}>Fail</FooterButton>
+        <Button onClick={handleFailSpeech} sx={footerBtnSx}>
+          <FooterBtnText>Fail</FooterBtnText>
+        </Button>
       </FlipContainer>
       <FlipContainer
         flipProps={flipProps}
         active={game.status === "off" || game.status === "result"}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
-        <FooterButton onClick={handleStartRound}>Play</FooterButton>
+        <Button onClick={handleStartRound} sx={footerBtnSx}>
+          <FooterBtnText>Play</FooterBtnText>
+        </Button>
       </FlipContainer>
     </Box>
   );
 }
 
-export default Footer;
+export default memo(Footer);
+
+const footerBtnSx = {
+  ...flexBoxSx,
+  fontFamily: Sx.font.display,
+  padding: ".5rem",
+  color: "#fff",
+  textTransform: "uppercase",
+};

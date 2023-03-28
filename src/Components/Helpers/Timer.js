@@ -5,7 +5,6 @@ import { timerContext, timerDispatchContext } from "../../Context/TimerContext";
 function Timer({ active, expire }) {
   const timer = useContext(timerContext);
   const timerDispatch = useContext(timerDispatchContext);
-  console.log(timer);
 
   const timerOff = () => {
     timerDispatch({ type: "TOGGLE_TIMER" });

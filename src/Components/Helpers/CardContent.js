@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { Textfit } from "react-textfit";
 import { Box } from "@mui/material";
 import { flexBoxSx, Sx } from "../../Styles/SXstyles";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
-import { pink } from "@mui/material/colors";
 
 function CardContent({ children }) {
   const screen = useContext(mediaQueryContext);
+
   return (
     <Box
       sx={{
@@ -52,4 +52,4 @@ function CardContent({ children }) {
   );
 }
 
-export default CardContent;
+export default memo(CardContent);

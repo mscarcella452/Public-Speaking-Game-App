@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 import { useToggle } from "../Helpers/CustomHooks";
 import { Paper, Box, Button } from "@mui/material";
 import { marginSx, flexBoxSx, Sx } from "../Styles/SXstyles";
@@ -26,7 +26,9 @@ const topButtonIconSx = {
 function Header({ game, load, sizeProps }) {
   const gameDispatch = useContext(gameDispatchContext);
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
-  const flipProps = { width, borderRadius };
+  const flipProps = useMemo(() => {
+    return { width, borderRadius };
+  }, [sizeProps]);
   //  const [rulesBtnIcon, toggleRulesIcon] = useToggleRulesBtnIcon(
   //    game,
   //    btnDispatch

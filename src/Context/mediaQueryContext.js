@@ -12,6 +12,7 @@ function MediaQueryContextProvider({ children }) {
     xs: useMediaQuery("(max-width: 320px) or (max-height: 320px)"),
     justify: useMediaQuery("(min-width: 900px) and (min-height: 800px)"),
   };
+
   return (
     <mediaQueryContext.Provider value={screen}>
       {children}

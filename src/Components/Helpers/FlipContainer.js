@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo, useEffect, useMemo } from "react";
 import { Paper, Box } from "@mui/material";
 import backgroundWords from "../../Images/backgroundWords.png";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
@@ -15,6 +15,11 @@ function FlipContainer({
   const screen = useContext(mediaQueryContext);
   const padding = flipPadding(screen);
   const { width, borderRadius, backgroundColor } = flipProps;
+
+  // useEffect(() => {
+  //   console.log(" children changed");
+  // }, [children]);
+  // console.log("flip");
 
   return (
     <Box
@@ -66,7 +71,7 @@ function FlipContainer({
   );
 }
 
-export default FlipContainer;
+export default memo(FlipContainer);
 
 const fabricOverlaySx = {
   ...absolutePositionSx,

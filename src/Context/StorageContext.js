@@ -3,7 +3,7 @@ import { useReducer, createContext, useEffect } from "react";
 export const storageContext = createContext();
 export const storageDispatchContext = createContext();
 
-export const intermisisonTrigger = 10;
+export const intermisisonTrigger = 2;
 
 // localStorage.removeItem("PublicSpeakingStorage");
 
@@ -47,6 +47,7 @@ const gameReducer = (storage, action) => {
 
     case "FULL_VERSION":
       return { ...storage, fullVersion: true };
+
     // case "UPDATE_TOPIC_INDEX":
     //   console.log(action.payload);
     //   updateStorage({ ...storage, topicIndex: [...action.payload] });
