@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Box } from "@mui/system";
-import FlipContainer from "./Helpers/FlipContainer";
-import Logo from "./Helpers/Logo";
-import { Sx } from "../Styles/SXstyles";
-import GameCard from "./MainCard/GameCard";
-import RulesCard from "./MainCard/RulesCard";
-import IntermissionCard from "./MainCard/IntermissionCard";
-import Timer from "./Helpers/Timer";
+import FlipContainer from "../Helpers/FlipContainer";
+import Logo from "../Helpers/Logo";
+import GameCard from "../MainCard/GameCard";
+import RulesCard from "../MainCard/RulesCard";
+import IntermissionCard from "../MainCard/IntermissionCard";
+
 // active timer = game.status === "speech"
-function Main({ game, mainContent, completeSpeech, sizeProps }) {
+function MiddleContainer({ game, mainContent, completeSpeech, sizeProps }) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
   // const [footerRTBtn, setFooterRtBtn] = useState('PLAY')
   // const [footerLTBtn, setFooterLtBtn] = useState('START')
@@ -18,34 +17,40 @@ function Main({ game, mainContent, completeSpeech, sizeProps }) {
 
   const triggerCompleteSpeech = () => console.log("timer please expire now");
   return (
-    <Box sx={{ ...mainSx, maxHeight: height, maxWidth: width }}>
+    <Box
+      sx={{
+        ...mainSx,
+        maxHeight: height,
+        maxWidth: width,
+      }}
+    >
       <FlipContainer
         flipProps={{ borderRadius }}
         active={game.flip}
         backgroundPosition={wordsPositioning}
-        Logo={<Logo />}
+        // Logo={<Logo />}
       >
         {game.rules && <RulesCard />}
         {!game.rules && game.status === "intermission" && (
           <IntermissionCard
-            timer={
-              <Timer
-                active={game.status === "intermission"}
-                expire={triggerCompleteSpeech}
-              />
-            }
+          // timer={
+          //   <Timer
+          //     active={game.status === "intermission"}
+          //     expire={triggerCompleteSpeech}
+          //   />
+          // }
           />
         )}
 
         {!game.rules && game.status !== "intermission" && (
           <GameCard
             mainContent={mainContent}
-            timer={
-              <Timer
-                active={game.status === "speech"}
-                expire={completeSpeech}
-              />
-            }
+            // timer={
+            //   <Timer
+            //     active={game.status === "speech"}
+            //     expire={completeSpeech}
+            //   />
+            // }
           />
         )}
       </FlipContainer>
@@ -53,7 +58,7 @@ function Main({ game, mainContent, completeSpeech, sizeProps }) {
   );
 }
 
-export default Main;
+export default MiddleContainer;
 
 const mainSx = {
   width: "100%",
@@ -61,4 +66,5 @@ const mainSx = {
   overflow: "hidden",
   position: "relative",
   zIndex: 2,
+  background: "red",
 };

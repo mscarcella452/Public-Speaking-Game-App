@@ -1,14 +1,12 @@
 import { useState, useContext, useMemo } from "react";
-import { useToggle } from "../Helpers/CustomHooks";
 import { Paper, Box, Button } from "@mui/material";
-import { marginSx, flexBoxSx, Sx } from "../Styles/SXstyles";
-import FlipContainer from "./Helpers/FlipContainer";
+import { marginSx, flexBoxSx } from "../../Styles/SXstyles";
+import FlipContainer from "../Helpers/FlipContainer";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
-import { useToggleRulesBtnIcon } from "../Helpers/CustomHooks";
-import { gameDispatchContext } from "../Context/GameStatusContext";
+import { gameDispatchContext } from "../../Context/GameStatusContext";
 
 const topButtonIconSx = {
   fontSize: {
@@ -23,7 +21,7 @@ const topButtonIconSx = {
   "@media (min-height: 1024px)": { fontSize: "40px" },
 };
 
-function Header({ game, load, sizeProps }) {
+function TopBtnContainer({ game, load, sizeProps }) {
   const gameDispatch = useContext(gameDispatchContext);
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
   const flipProps = useMemo(() => {
@@ -42,12 +40,13 @@ function Header({ game, load, sizeProps }) {
   }
 
   function handleRules() {
-    if (game.status === "off") {
-      !game.rules ? load(toggleRules) : load(toggleRules, "delay");
-    } else {
-      load(toggleRules, "toggleFlip");
-      // gameDispatch({ type: "LOAD" });
-    }
+    // if (game.status === "off") {
+    //   !game.rules ? load(toggleRules) : load(toggleRules, "delay");
+    // } else {
+    //   load(toggleRules, "toggleFlip");
+    //   // gameDispatch({ type: "LOAD" });
+    // }
+    console.log("handleRules");
   }
 
   function handleQuit() {
@@ -55,7 +54,9 @@ function Header({ game, load, sizeProps }) {
   }
 
   return (
-    <Box sx={{ ...marginSx, height: height, minHeight: height }}>
+    <Box
+      sx={{ ...marginSx, height: height, minHeight: height, background: "red" }}
+    >
       <FlipContainer
         flipProps={flipProps}
         active={game.status !== "off"}
@@ -78,7 +79,7 @@ function Header({ game, load, sizeProps }) {
   );
 }
 
-export default Header;
+export default TopBtnContainer;
 
 const topBtnSx = {
   ...flexBoxSx,

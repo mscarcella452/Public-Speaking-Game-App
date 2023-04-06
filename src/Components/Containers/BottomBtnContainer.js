@@ -1,12 +1,12 @@
 import { useContext, memo, useEffect, useMemo } from "react";
 import { Paper, Box, Button } from "@mui/material";
-import { marginSx, Sx, flexBoxSx } from "../Styles/SXstyles";
-import FlipContainer from "./Helpers/FlipContainer";
-import FooterBtnText from "./Helpers/FooterBtnText";
-import { gameDispatchContext } from "../Context/GameStatusContext";
-import { timerDispatchContext } from "../Context/TimerContext";
+import { marginSx, Sx, flexBoxSx } from "../../Styles/SXstyles";
+import FlipContainer from "../Helpers/FlipContainer";
+import FooterBtnText from "../Helpers/FooterBtnText";
+import { gameDispatchContext } from "../../Context/GameStatusContext";
+import { timerDispatchContext } from "../../Context/TimerContext";
 
-function Footer({
+function BottomBtnContainer({
   game,
   handleStartRound,
   triggerFailedSpeech,
@@ -48,7 +48,7 @@ function Footer({
         active={game.status === "topic"}
         backgroundPosition={wordsPositioning.bottomLeftSx}
       >
-        <Button onClick={handleBoxLeft} sx={footerBtnSx}>
+        <Button onClick={handleBoxLeft} sx={bottomBtnSx}>
           <FooterBtnText>Start</FooterBtnText>
         </Button>
       </FlipContainer>
@@ -57,7 +57,7 @@ function Footer({
         active={game.status === "speech"}
         backgroundPosition={wordsPositioning.bottomCenterSx}
       >
-        <Button onClick={handleFailSpeech} sx={footerBtnSx}>
+        <Button onClick={handleFailSpeech} sx={bottomBtnSx}>
           <FooterBtnText>Fail</FooterBtnText>
         </Button>
       </FlipContainer>
@@ -66,7 +66,7 @@ function Footer({
         active={game.status === "off" || game.status === "result"}
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
-        <Button onClick={handleStartRound} sx={footerBtnSx}>
+        <Button onClick={handleStartRound} sx={bottomBtnSx}>
           <FooterBtnText>Play</FooterBtnText>
         </Button>
       </FlipContainer>
@@ -74,9 +74,9 @@ function Footer({
   );
 }
 
-export default memo(Footer);
+export default memo(BottomBtnContainer);
 
-const footerBtnSx = {
+const bottomBtnSx = {
   ...flexBoxSx,
   fontFamily: Sx.font.display,
   padding: ".5rem",
