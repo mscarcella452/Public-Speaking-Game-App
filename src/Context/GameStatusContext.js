@@ -5,47 +5,52 @@ export const gameContext = createContext();
 export const gameDispatchContext = createContext();
 
 const intialValue = {
-  status: "off",
-  flip: false,
+  on: false,
   rules: false,
-  thirdBtnTitle: "Play",
 };
+// const intialValue = {
+//   status: "off",
+//   flip: false,
+//   rules: false,
+//   thirdBtnTitle: "Play",
+// };
 
 const gameReducer = (game, action) => {
   switch (action.type) {
-    case "GAME_OFF":
+    case "TOGGLE_GAME":
       return {
-        ...intialValue,
+        on: !game.on,
+        rules: false,
       };
 
-    case "LOAD":
-      return { ...game, flip: !game.flip };
-    case "TOPIC_STATUS":
-      return {
-        ...game,
-        // flip: true,
-        status: "topic",
-      };
-    case "SPEECH_STATUS":
-      return {
-        ...game,
-        status: "speech",
-        thirdBtnTitle: "Next",
-      };
+    // case "LOAD":
+    //   return { ...game, flip: !game.flip };
+    // case "TOPIC_STATUS":
+    //   return {
+    //     ...game,
+    //     // flip: true,
+    //     status: "topic",
+    //   };
+    // case "SPEECH_STATUS":
+    //   return {
+    //     ...game,
+    //     status: "speech",
+    //     thirdBtnTitle: "Next",
+    //   };
 
-    case "RESULT_STATUS":
-      return {
-        ...game,
-        // flip: true,
-        status: "result",
-      };
-    case "INTERMISSION_STATUS":
-      return {
-        ...game,
-        status: "intermission",
-        flip: true,
-        thirdBtnTitle: "Upgrade",
-      };
+    // case "RESULT_STATUS":
+    //   return {
+    //     ...game,
+    //     // flip: true,
+    //     status: "result",
+    //   };
+    // case "INTERMISSION_STATUS":
+    //   return {
+    //     ...game,
+    //     status: "intermission",
+    //     flip: true,
+    //     thirdBtnTitle: "Upgrade",
+    //   };
     case "TOGGLE_RULES":
       return {
         ...game,

@@ -46,20 +46,18 @@ function TopBtnContainer({ game, load, sizeProps }) {
     //   load(toggleRules, "toggleFlip");
     //   // gameDispatch({ type: "LOAD" });
     // }
-    console.log("handleRules");
+    gameDispatch({ type: "TOGGLE_RULES" });
   }
 
   function handleQuit() {
-    gameDispatch({ type: "GAME_OFF" });
+    gameDispatch({ type: "TOGGLE_GAME" });
   }
 
   return (
-    <Box
-      sx={{ ...marginSx, height: height, minHeight: height, background: "red" }}
-    >
+    <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipProps={flipProps}
-        active={game.status !== "off"}
+        active={game.on && !game.rules}
         backgroundPosition={wordsPositioning.topLeftSx}
       >
         <Button sx={topBtnSx} onClick={handleQuit}>

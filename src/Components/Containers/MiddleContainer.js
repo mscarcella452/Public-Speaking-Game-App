@@ -2,20 +2,27 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box } from "@mui/system";
 import FlipContainer from "../Helpers/FlipContainer";
 import Logo from "../Helpers/Logo";
+import Timer from "../Helpers/Timer";
 import GameCard from "../MainCard/GameCard";
 import RulesCard from "../MainCard/RulesCard";
+import ResultsCard from "../MainCard/ResultsCard";
 import IntermissionCard from "../MainCard/IntermissionCard";
 
 // active timer = game.status === "speech"
-function MiddleContainer({ game, mainContent, completeSpeech, sizeProps }) {
+function MiddleContainer({
+  game,
+  gameStatus,
+  // mainContent,
+  completeSpeech,
+  sizeProps,
+}) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
-  // const [footerRTBtn, setFooterRtBtn] = useState('PLAY')
-  // const [footerLTBtn, setFooterLtBtn] = useState('START')
 
   // const mainContent =
   //   "The similarities of playing the Oregon Trail pc game on its highest difficluts, and the real life Oregon Trail.";
 
   const triggerCompleteSpeech = () => console.log("timer please expire now");
+
   return (
     <Box
       sx={{
@@ -26,33 +33,50 @@ function MiddleContainer({ game, mainContent, completeSpeech, sizeProps }) {
     >
       <FlipContainer
         flipProps={{ borderRadius }}
-        active={game.flip}
+        active={game.on}
         backgroundPosition={wordsPositioning}
-        // Logo={<Logo />}
+        Logo={<Logo />}
       >
-        {game.rules && <RulesCard />}
-        {!game.rules && game.status === "intermission" && (
-          <IntermissionCard
-          // timer={
-          //   <Timer
-          //     active={game.status === "intermission"}
-          //     expire={triggerCompleteSpeech}
-          //   />
-          // }
-          />
-        )}
-
-        {!game.rules && game.status !== "intermission" && (
-          <GameCard
-            mainContent={mainContent}
-            // timer={
-            //   <Timer
-            //     active={game.status === "speech"}
-            //     expire={completeSpeech}
-            //   />
-            // }
-          />
-        )}
+        {
+          /* 
+          rules Card (if rules.on)
+          */
+          game.rules ? (
+            <RulesCard />
+          ) : /* 
+          Game Card (if gameStatus === "gameActive")
+          */
+          gameStatus === "gameActive" ? (
+            <GameCard
+              mainContent={"Game"}
+              // mainContent={mainContent}
+              timer={
+                <Timer
+                  active={gameStatus === "speech"}
+                  expire={completeSpeech}
+                />
+              }
+            />
+          ) : /* 
+          Results Card (if gameStatus === "result")
+          */ gameStatus === "result" ? (
+            <ResultsCard
+              mainContent={"result"}
+              // mainContent={mainContent}
+            />
+          ) : (
+            /* 
+          Intermission Card (if gameStatus === "intermission")
+          */ <IntermissionCard
+              timer={
+                <Timer
+                  active={gameStatus === "intermission"}
+                  expire={triggerCompleteSpeech}
+                />
+              }
+            />
+          )
+        }
       </FlipContainer>
     </Box>
   );
