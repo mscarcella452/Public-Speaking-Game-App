@@ -11,9 +11,9 @@ import IntermissionCard from "../MainCard/IntermissionCard";
 // active timer = game.status === "speech"
 function MiddleContainer({
   game,
-  gameStatus,
+  card,
   // mainContent,
-  completeSpeech,
+  handleCompleteSpeech,
   sizeProps,
 }) {
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
@@ -33,7 +33,8 @@ function MiddleContainer({
     >
       <FlipContainer
         flipProps={{ borderRadius }}
-        active={game.on}
+        active={game.on ? card.flip && game.rulesFlip : game.rulesFlip}
+        // active={game.on ? card.flip : game.rules}
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}
       >
@@ -44,38 +45,39 @@ function MiddleContainer({
           game.rules ? (
             <RulesCard />
           ) : /* 
-          Game Card (if gameStatus === "gameActive")
+          Game Card (if card.type === "gameActive")
           */
-          gameStatus === "gameActive" ? (
+          card.type === "game" ? (
             <GameCard
               mainContent={"Game"}
               // mainContent={mainContent}
               timer={
                 <Timer
-                  active={gameStatus === "speech"}
-                  expire={completeSpeech}
+                  active={game.on && card.type === "game"}
+                  game={game}
+                  expire={handleCompleteSpeech}
                 />
               }
             />
           ) : /* 
-          Results Card (if gameStatus === "result")
-          */ gameStatus === "result" ? (
+          Results Card (if card.type === "result")
+          */ card.type === "result" ? (
             <ResultsCard
               mainContent={"result"}
               // mainContent={mainContent}
             />
-          ) : (
+          ) : card.type === "intermission" ? (
             /* 
-          Intermission Card (if gameStatus === "intermission")
+          Intermission Card (if card.type === "intermission")
           */ <IntermissionCard
               timer={
                 <Timer
-                  active={gameStatus === "intermission"}
+                  active={card.type === "intermission"}
                   expire={triggerCompleteSpeech}
                 />
               }
             />
-          )
+          ) : null
         }
       </FlipContainer>
     </Box>

@@ -7,6 +7,9 @@ export const gameDispatchContext = createContext();
 const intialValue = {
   on: false,
   rules: false,
+  playBtn: true,
+  rulesBtn: true,
+  rulesFlip: false,
 };
 // const intialValue = {
 //   status: "off",
@@ -17,10 +20,30 @@ const intialValue = {
 
 const gameReducer = (game, action) => {
   switch (action.type) {
-    case "TOGGLE_GAME":
+    case "GAME_OFF":
       return {
-        on: !game.on,
-        rules: false,
+        ...intialValue,
+        playBtn: false,
+        rulesBtn: false,
+      };
+    case "GAME_ON":
+      return {
+        ...game,
+        on: true,
+      };
+    case "GAME_READY":
+      return {
+        ...intialValue,
+      };
+    case "TOGGLE_RULES_FLIP":
+      return {
+        ...game,
+        rulesFlip: !game.rulesFlip,
+      };
+    case "TOGGLE_RULES_BTN":
+      return {
+        ...game,
+        rulesBtn: !game.rulesBtn,
       };
 
     // case "LOAD":

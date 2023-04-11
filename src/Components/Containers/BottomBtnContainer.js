@@ -1,4 +1,6 @@
 import { useContext, useReducer, memo, useEffect, useMemo } from "react";
+import { btnReducer, initialBtnValue } from "../../Helpers/reducers";
+import { delay } from "../../Helpers/FunctionHelpers";
 import { Paper, Box, Button } from "@mui/material";
 import { marginSx, Sx, flexBoxSx } from "../../Styles/SXstyles";
 import FlipContainer from "../Helpers/FlipContainer";
@@ -8,10 +10,12 @@ import { timerDispatchContext } from "../../Context/TimerContext";
 
 function BottomBtnContainer({
   game,
-  gameStatus,
-  setGameStatus,
-  triggerFailedSpeech,
-  load,
+  // cardType,
+  card,
+  cardDispatch,
+  // btn,
+  // btnDispatch,
+  handleFailSpeech,
   sizeProps,
 }) {
   const gameDispatch = useContext(gameDispatchContext);
@@ -22,44 +26,48 @@ function BottomBtnContainer({
   }, [sizeProps]);
   const [btn, btnDispatch] = useReducer(btnReducer, initialBtnValue);
 
-  useEffect(() => {
-    if (!game.on) {
-      btnDispatch({ type: "LOAD" });
-      setTimeout(() => btnDispatch({ type: "START_GAME" }), 1200);
-    }
-  }, [game.on]);
+  const toggleFlip = () => cardDispatch({ type: "TOGGLE_FLIP" });
+  const toggleRulesCard = payload =>
+    cardDispatch({ type: "TOGGLE_RULES_CARD", payload: payload });
+  const gameCard = () => cardDispatch({ type: "GAME_CARD" });
 
-  // dispatch functions
-  const startSpeech = () => btnDispatch({ type: "SPEECH_STATE" });
+  useEffect(() => {
+    // needed b/c complete speech timer expire function in parent component and btnDispatch in this component. ??? would context and importing btnDispatch in parent cause middleContainer to re-render when btn changes
+    card.type === "result" && btnDispatch({ type: "RESULT_STATE" });
+  }, [card]);
 
   // bottomLefttBtn
   function handleBtnLeft() {
     if (btn.state === "topic") {
-      startSpeech();
+      btnDispatch({ type: "SPEECH_STATE" });
       timerDispatch({ type: "TOGGLE_TIMER" });
     } else console.log("upgrade game");
   }
 
-  // middleButton
-  function handleFailSpeech() {
-    // load(triggerFailedSpeech, "toggleFlip");
-    btnDispatch({ type: "RESULT_STATE" });
-    setGameStatus("result");
-    timerDispatch({ type: "RESET" });
-  }
-
   function handleBtnRight() {
-    !game.on && gameDispatch({ type: "TOGGLE_GAME" });
-
-    btnDispatch({ type: "TOPIC_STATE" });
-    setGameStatus("gameActive");
+    const showGameCard = () => {
+      cardDispatch({ type: "GAME_CARD" });
+      btnDispatch({ type: "TOPIC_STATE" });
+    };
+    if (game.on) {
+      delay(toggleFlip, showGameCard);
+    } else {
+      gameDispatch({ type: "GAME_ON" });
+      showGameCard();
+      // need better name than toggle rules flip
+      gameDispatch({ type: "TOGGLE_RULES_FLIP" });
+    }
   }
+  const defaultActive = useMemo(
+    () => !game.rules && game.rulesFlip && card.flip,
+    [game.rules, game.rulesFlip, card.flip]
+  );
 
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipProps={flipProps}
-        active={btn.state === "topic"}
+        active={defaultActive && btn.state === "topic"}
         backgroundPosition={wordsPositioning.bottomLeftSx}
       >
         <Button onClick={handleBtnLeft} sx={bottomBtnSx}>
@@ -68,7 +76,7 @@ function BottomBtnContainer({
       </FlipContainer>
       <FlipContainer
         flipProps={flipProps}
-        active={btn.state === "speech"}
+        active={defaultActive && btn.state === "speech"}
         backgroundPosition={wordsPositioning.bottomCenterSx}
       >
         <Button onClick={handleFailSpeech} sx={bottomBtnSx}>
@@ -78,11 +86,15 @@ function BottomBtnContainer({
       <FlipContainer
         flipProps={flipProps}
         // active={gameStatus === "off" || gameStatus === "result"}
-        active={btn.state === "startGame" || btn.state === "result"}
+        active={
+          game.on ? defaultActive && btn.state === "result" : game.playBtn
+        }
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
         <Button onClick={handleBtnRight} sx={bottomBtnSx}>
-          <FooterBtnText>{btn.rightBtn}</FooterBtnText>
+          <FooterBtnText>
+            {game.on && btn.state === "result" ? "Next" : "Play"}
+          </FooterBtnText>
         </Button>
       </FlipContainer>
     </Box>
@@ -98,46 +110,3 @@ const bottomBtnSx = {
   color: "#fff",
   textTransform: "uppercase",
 };
-
-// btn Reducer
-
-const initialBtnValue = {
-  state: "load",
-  leftBtn: "Start",
-  rightBtn: "Play",
-};
-
-function btnReducer(btn, action) {
-  switch (action.type) {
-    case "LOAD":
-      return {
-        ...btn,
-        state: "load",
-      };
-    case "START_GAME":
-      return {
-        ...btn,
-        rightBtn: "Play",
-        state: "startGame",
-      };
-    case "TOPIC_STATE":
-      return {
-        ...btn,
-        state: "topic",
-      };
-    case "SPEECH_STATE":
-      return {
-        state: "speech",
-        leftBtn: "Start",
-        rightBtn: "Next",
-      };
-    case "RESULT_STATE":
-      return {
-        ...btn,
-        state: "result",
-      };
-
-    default:
-      throw new Error(`Unknown action type: ${action.type}`);
-  }
-}

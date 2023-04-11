@@ -167,3 +167,18 @@ export function flipBorderRadius(screen) {
 //     ? true
 //     : false;
 // }
+
+// -----------------------------------------------
+export function delay(flipFunc, timeoutFunc) {
+  flipFunc();
+  setTimeout(() => {
+    timeoutFunc();
+  }, 1300);
+}
+export function doubleFlip(flipFunc, timeoutFunc) {
+  flipFunc();
+  setTimeout(() => {
+    flipFunc();
+    timeoutFunc();
+  }, 1200);
+}

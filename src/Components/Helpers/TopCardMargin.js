@@ -95,18 +95,20 @@ function TopCardMargin({ label, timer }) {
           </Textfit>
         </Paper>
       )} */}
-      <Paper sx={{ ...timerSx, width: componentWidth, boxShadow: boxShadow }}>
-        <Textfit
-          min={1}
-          max={timerFontSize}
-          forceSingleModeWidth={false}
-          throttle={100}
-          mode={"single"}
-          style={{ ...flexBoxSx, height: "95%" }}
-        >
-          {timer}
-        </Textfit>
-      </Paper>
+      {timer && (
+        <Paper sx={{ ...timerSx, width: componentWidth, boxShadow: boxShadow }}>
+          <Textfit
+            min={1}
+            max={timerFontSize}
+            forceSingleModeWidth={false}
+            throttle={100}
+            mode={"single"}
+            style={{ ...flexBoxSx, height: "95%" }}
+          >
+            {timer}
+          </Textfit>
+        </Paper>
+      )}
     </Box>
   );
 }

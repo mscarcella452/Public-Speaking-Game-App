@@ -5,7 +5,7 @@ import TopCardMargin from "../Helpers/TopCardMargin";
 import CardContent from "../Helpers/CardContent";
 // import { ColorOverlay, FabricOverlay } from "../Helpers/Overlays";
 
-function GameCard({ timer, label, mainContent, backgroundColor }) {
+function GameCard({ timer, mainContent, backgroundColor }) {
   return (
     <Box
       sx={{
