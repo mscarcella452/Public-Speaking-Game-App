@@ -3,7 +3,7 @@ import { Paper, Box } from "@mui/material";
 import backgroundWords from "../../Images/backgroundWords.png";
 import { mediaQueryContext } from "../../Context/mediaQueryContext";
 import { flipPadding } from "../../Helpers/FunctionHelpers";
-import { flexBoxSx, Sx, absolutePositionSx } from "../../Styles/SXstyles";
+import { flexBoxSx, Sx, fabricSx } from "../../Styles/SXstyles";
 
 function FlipContainer({
   flipProps,
@@ -73,23 +73,13 @@ function FlipContainer({
 
 export default memo(FlipContainer);
 
-const fabricOverlaySx = {
-  ...absolutePositionSx,
-  zIndex: 7,
-  opacity: 0.4,
-  background: `url("https://www.transparenttextures.com/patterns/navy.png") repeat center`,
-  backgroundSize: { galaxyFold: "100%", sm: "75%", lg: "50%" },
-};
-
-const fabricSx = {
-  ...absolutePositionSx,
-  background: `url("https://www.transparenttextures.com/patterns/navy.png")`,
-  backgroundSize: { galaxyFold: "70%", xs: "40%", lg: "20%" },
-  backgroundPosition: "center",
-  backgroundRepeat: "repeat",
-  opacity: 0.55,
-  zIndex: 2,
-};
+// const fabricOverlaySx = {
+//   ...absolutePositionSx,
+//   zIndex: 7,
+//   opacity: 0.4,
+//   background: `url("https://www.transparenttextures.com/patterns/navy.png") repeat center`,
+//   backgroundSize: { galaxyFold: "100%", sm: "75%", lg: "50%" },
+// };
 
 const backgroundWordsSx = {
   height: "100vh",
@@ -103,6 +93,9 @@ const backgroundWordsSx = {
   "&::before": {
     content: '""',
     ...fabricSx,
+    backgroundSize: { galaxyFold: "70%", xs: "40%", lg: "20%" },
+    opacity: 0.55,
+    zIndex: 2,
   },
 };
 

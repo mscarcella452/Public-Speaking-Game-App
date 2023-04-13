@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Textfit } from "react-textfit";
 import { Box } from "@mui/material";
-import { flexBoxSx, Sx } from "../../Styles/SXstyles";
+import { flexBoxSx, Sx, fabricSx } from "../../Styles/SXstyles";
 // import { FabricOverlay } from "../Helpers/Overlays";
 import RulesBox from "../Helpers/RulesBox";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -34,6 +34,7 @@ function RulesCard() {
           : 1.65,
       }}
     >
+      <Box sx={fabricSx} />
       <Textfit
         min={0}
         max={screen.xl ? 100 : 30}

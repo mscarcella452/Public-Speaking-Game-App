@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { flexBoxSx, Sx } from "../../Styles/SXstyles";
+import { flexBoxSx, Sx, fabricSx } from "../../Styles/SXstyles";
 // import { mainCardContainerSx } from "../../Styles/SXstyles";
 import TopCardMargin from "../Helpers/TopCardMargin";
 import CardContent from "../Helpers/CardContent";
@@ -10,8 +10,10 @@ function GameCard({ timer, mainContent }) {
     <Box sx={mainCardContainerSx}>
       {/* <ColorOverlay /> */}
       <TopCardMargin label={"TOPIC:"} timer={timer} />
+      <Box sx={{ ...fabricSx, zIndex: -1 }} />
       <CardContent>{mainContent}</CardContent>
       {/* <FabricOverlay /> */}
+      <Box sx={fabricSx} />
     </Box>
   );
 }

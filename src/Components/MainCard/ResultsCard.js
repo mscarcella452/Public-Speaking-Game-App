@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { flexBoxSx, Sx } from "../../Styles/SXstyles";
+import { flexBoxSx, Sx, fabricSx } from "../../Styles/SXstyles";
 // import { mainCardContainerSx } from "../../Styles/SXstyles";
 import TopCardMargin from "../Helpers/TopCardMargin";
 import CardContent from "../Helpers/CardContent";
@@ -15,8 +15,9 @@ function ResultCard({ failSpeech, tidbit }) {
     >
       {/* <ColorOverlay /> */}
       <TopCardMargin label={failSpeech ? "FAIL" : "100%"} color={"#fff"} />
+      <Box sx={{ ...fabricSx, zIndex: -1 }} />
       <CardContent>{tidbit}</CardContent>
-      {/* <FabricOverlay /> */}
+      <Box sx={fabricSx} />
     </Box>
   );
 }

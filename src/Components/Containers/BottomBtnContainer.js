@@ -82,7 +82,9 @@ function BottomBtnContainer({
         flipProps={flipProps}
         // active={gameStatus === "off" || gameStatus === "result"}
         active={
-          game.on ? defaultActive && btn.state === "result" : game.playBtn
+          game.on
+            ? defaultActive && btn.state === "result"
+            : game.playBtn && !game.rules
         }
         backgroundPosition={wordsPositioning.bottomRightSx}
       >

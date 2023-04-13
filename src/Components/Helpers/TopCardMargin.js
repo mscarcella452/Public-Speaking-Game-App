@@ -83,7 +83,14 @@ function TopCardMargin({ label, timer }) {
         </Textfit>
       </Box>
       {timer && (
-        <Paper sx={{ ...timerSx, width: componentWidth, boxShadow: boxShadow }}>
+        <Paper
+          sx={{
+            ...timerSx,
+            width: componentWidth,
+            boxShadow: boxShadow,
+            zIndex: 10,
+          }}
+        >
           <Textfit
             min={1}
             max={timerFontSize}

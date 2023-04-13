@@ -40,3 +40,13 @@ export const marginSx = {
   gap: "1.5rem",
   width: "100%",
 };
+
+export const fabricSx = {
+  ...absolutePositionSx,
+  background: `url("https://www.transparenttextures.com/patterns/navy.png")`,
+  backgroundSize: { galaxyFold: "70%", xs: "50%", md: "40%", lg: "20%" },
+  // backgroundSize: "30%",
+  backgroundPosition: "center",
+  backgroundRepeat: "repeat",
+  opacity: 0.4,
+};
