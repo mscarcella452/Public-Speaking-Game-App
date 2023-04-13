@@ -44,6 +44,12 @@ const gameReducer = (storage, action) => {
 
     case "UPDATE_SUCCESS_INDEX":
       return { ...storage, successIndex: [...action.payload] };
+    case "UPDATE_TIDBIT_INDEX":
+      return {
+        ...storage,
+        successIndex: [...action.winIndex],
+        failIndex: [...action.failIndex],
+      };
 
     case "FULL_VERSION":
       return { ...storage, fullVersion: true };

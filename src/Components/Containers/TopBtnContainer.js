@@ -7,7 +7,7 @@ import FlipContainer from "../Helpers/FlipContainer";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { gameDispatchContext } from "../../Context/GameStatusContext";
+import { gameDispatchContext } from "../../Context/GameContext";
 import { timerDispatchContext } from "../../Context/TimerContext";
 
 const topButtonIconSx = {

@@ -69,17 +69,42 @@ export function useTopic(storage) {
 
   return [currentTopic, topicGenerator, usedTopicIndex];
 }
-export function useTidbit(storage, failedSpeech) {
-  let index = failedSpeech ? storage.failIndex : storage.successIndex;
-  let tidbits = failedSpeech ? failTidbits : successTidbits;
-
+export function useWinTidbit(storage) {
   const [currentTidbit, tidbitGenerator, usedTidbitIndex] = useGenerateText(
-    index,
-    tidbits
+    storage.successIndex,
+    successTidbits
   );
 
   return [currentTidbit, tidbitGenerator, usedTidbitIndex];
 }
+export function useFailTidbit(storage) {
+  const [currentTidbit, tidbitGenerator, usedTidbitIndex] = useGenerateText(
+    storage.failIndex,
+    failTidbits
+  );
+
+  return [currentTidbit, tidbitGenerator, usedTidbitIndex];
+}
+// export function useTidbit(storageIndex, tidbits) {
+//   const [currentTidbit, tidbitGenerator, usedTidbitIndex] = useGenerateText(
+//     storageIndex,
+//     tidbits
+//   );
+
+//   return [currentTidbit, tidbitGenerator, usedTidbitIndex];
+// }
+// export function useTidbit(storage, failedSpeech) {
+//   let index = failedSpeech ? storage.failIndex : storage.successIndex;
+//   let tidbits = failedSpeech ? failTidbits : successTidbits;
+//   console.log(index);
+
+//   const [currentTidbit, tidbitGenerator, usedTidbitIndex] = useGenerateText(
+//     index,
+//     tidbits
+//   );
+
+//   return [currentTidbit, tidbitGenerator, usedTidbitIndex];
+// }
 
 // ---------------------------------
 export function useToggleRulesBtnIcon(game, btnDispatch) {

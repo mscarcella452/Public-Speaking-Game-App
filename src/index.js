@@ -4,15 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import GameContext from "./Context/GameContext";
+import AppContext from "./Context/AppContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <GameContext>
+  <AppContext>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </GameContext>
+  </AppContext>
 );
 
 // If you want to start measuring performance in your app, pass a function

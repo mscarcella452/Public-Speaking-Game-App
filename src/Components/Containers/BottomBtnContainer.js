@@ -1,21 +1,19 @@
-import { useContext, useReducer, memo, useEffect, useMemo } from "react";
-import { btnReducer, initialBtnValue } from "../../Helpers/reducers";
+import { useContext, memo, useReducer, useEffect, useMemo } from "react";
 import { delay } from "../../Helpers/FunctionHelpers";
-import { Paper, Box, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { marginSx, Sx, flexBoxSx } from "../../Styles/SXstyles";
 import FlipContainer from "../Helpers/FlipContainer";
 import FooterBtnText from "../Helpers/FooterBtnText";
-import { gameDispatchContext } from "../../Context/GameStatusContext";
+import { gameDispatchContext } from "../../Context/GameContext";
 import { timerDispatchContext } from "../../Context/TimerContext";
+import { btnReducer, initialBtnValue } from "../../Helpers/showCaseReducers";
 
 function BottomBtnContainer({
   game,
-  // cardType,
   card,
   cardDispatch,
-  // btn,
-  // btnDispatch,
   handleFailSpeech,
+  generateTopic,
   sizeProps,
 }) {
   const gameDispatch = useContext(gameDispatchContext);
@@ -25,11 +23,6 @@ function BottomBtnContainer({
     return { width, borderRadius, backgroundColor: Sx.color.secondary };
   }, [sizeProps]);
   const [btn, btnDispatch] = useReducer(btnReducer, initialBtnValue);
-
-  const toggleFlip = () => cardDispatch({ type: "TOGGLE_FLIP" });
-  const toggleRulesCard = payload =>
-    cardDispatch({ type: "TOGGLE_RULES_CARD", payload: payload });
-  const gameCard = () => cardDispatch({ type: "GAME_CARD" });
 
   useEffect(() => {
     // needed b/c complete speech timer expire function in parent component and btnDispatch in this component. ??? would context and importing btnDispatch in parent cause middleContainer to re-render when btn changes
@@ -50,6 +43,7 @@ function BottomBtnContainer({
       btnDispatch({ type: "TOPIC_STATE" });
     };
     if (game.on) {
+      const toggleFlip = () => cardDispatch({ type: "TOGGLE_FLIP" });
       delay(toggleFlip, showGameCard);
     } else {
       gameDispatch({ type: "GAME_ON" });
@@ -57,6 +51,7 @@ function BottomBtnContainer({
       // need better name than toggle rules flip
       gameDispatch({ type: "TOGGLE_RULES_FLIP" });
     }
+    generateTopic();
   }
   const defaultActive = useMemo(
     () => !game.rules && game.rulesFlip && card.flip,

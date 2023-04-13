@@ -1,37 +1,52 @@
-import { useState, useEffect, useReducer, useContext } from "react";
+import { useState, useReducer, useContext } from "react";
 import {
-  cardReducer,
-  initialCardValue,
-  btnReducer,
-  initialBtnValue,
-} from "../../Helpers/reducers";
+  useTopic,
+  useWinTidbit,
+  useFailTidbit,
+} from "../../Helpers/CustomHooks";
+import { cardReducer, initialCardValue } from "../../Helpers/showCaseReducers";
 import { delay } from "../../Helpers/FunctionHelpers";
 import { flexBoxSx } from "../../Styles/SXstyles";
 import { Box } from "@mui/material";
 import MiddleContainer from "./MiddleContainer";
 import BottomBtnContainer from "./BottomBtnContainer";
 import { timerDispatchContext } from "../../Context/TimerContext";
+import {
+  storageContext,
+  storageDispatchContext,
+} from "../../Context/StorageContext";
 
 function ShowcaseContainer({ mainSize, bottomSize, game, gap }) {
   const timerDispatch = useContext(timerDispatchContext);
+  const storage = useContext(storageContext);
+  const storageDispatch = useContext(storageDispatchContext);
   const [card, cardDispatch] = useReducer(cardReducer, initialCardValue);
-  // const [btn, btnDispatch] = useReducer(btnReducer, initialBtnValue);
-  // useEffect(() => {
-  //   console.log("gap changed");
-  // }, [gap]);
+  const [failSpeech, setFailSpeech] = useState(true);
+  const [currentTopic, topicGenerator, usedTopicIndex] = useTopic(storage);
+  const [winTidbit, getWinTidbit, usedWinIndex] = useWinTidbit(storage);
+  const [failTidbit, getFailTidbit, usedFailIndex] = useFailTidbit(storage);
 
   function endTurn(fail) {
+    setFailSpeech(fail);
+    fail && timerDispatch({ type: "TOGGLE_TIMER" });
+    fail ? getFailTidbit() : getWinTidbit();
+    storageDispatch({
+      type: "UPDATE_TIDBIT_INDEX",
+      winIndex: usedWinIndex,
+      failIndex: usedFailIndex,
+    });
+
     const toggleFlip = () => cardDispatch({ type: "TOGGLE_FLIP" });
     const resultcard = () => {
       cardDispatch({ type: "RESULT_CARD" });
       timerDispatch({ type: "RESET" });
-      // btnDispatch({ type: "RESULT_STATE" });
     };
-
-    fail && timerDispatch({ type: "TOGGLE_TIMER" });
-    // btnDispatch({ type: "LOAD" });
     delay(toggleFlip, resultcard);
-    // console.log("hey");
+  }
+
+  function generateTopic() {
+    topicGenerator();
+    storageDispatch({ type: "TURN_COUNT", payload: usedTopicIndex });
   }
 
   const handleCompleteSpeech = () => endTurn(false);
@@ -45,16 +60,18 @@ function ShowcaseContainer({ mainSize, bottomSize, game, gap }) {
           game={game}
           card={card}
           handleCompleteSpeech={handleCompleteSpeech}
+          failSpeech={failSpeech}
+          currentTopic={currentTopic}
+          currentTidbit={failSpeech ? failTidbit : winTidbit}
         />
       </Box>
       <BottomBtnContainer
         sizeProps={bottomSize}
         game={game}
-        // btn={btn}
-        // btnDispatch={btnDispatch}
         card={card}
         cardDispatch={cardDispatch}
         handleFailSpeech={handleFailSpeech}
+        generateTopic={generateTopic}
       />
     </Box>
   );

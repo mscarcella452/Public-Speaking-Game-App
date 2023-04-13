@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 import { Paper, Box } from "@mui/material";
 import { Textfit } from "react-textfit";
 import { flexBoxSx, Sx } from "../../Styles/SXstyles";
@@ -76,25 +76,12 @@ function TopCardMargin({ label, timer }) {
             ...flexBoxSx,
             paddingRight: ".15rem",
             justifyContent: "flex-start",
+            textTransform: "uppercase",
           }}
         >
           {label}
         </Textfit>
       </Box>
-      {/* {game.status !== "result" && (
-        <Paper sx={{ ...timerSx, width: componentWidth }}>
-          <Textfit
-            min={1}
-            max={30}
-            forceSingleModeWidth={false}
-            throttle={100}
-            mode={"single"}
-            style={{ ...flexBoxSx, height: "95%" }}
-          >
-            {timer}
-          </Textfit>
-        </Paper>
-      )} */}
       {timer && (
         <Paper sx={{ ...timerSx, width: componentWidth, boxShadow: boxShadow }}>
           <Textfit

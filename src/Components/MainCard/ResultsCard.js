@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Box } from "@mui/material";
 import { flexBoxSx, Sx } from "../../Styles/SXstyles";
 // import { mainCardContainerSx } from "../../Styles/SXstyles";
@@ -6,21 +5,16 @@ import TopCardMargin from "../Helpers/TopCardMargin";
 import CardContent from "../Helpers/CardContent";
 // import { ColorOverlay, FabricOverlay } from "../Helpers/Overlays";
 
-function ResultCard({ speechFail, tidbit }) {
-  const result = useMemo(() => (speechFail ? "FAIL" : "100%"), [speechFail]);
-  const backgroundColor = useMemo(
-    () => (speechFail ? Sx.color.fail : Sx.color.success),
-    [speechFail]
-  );
+function ResultCard({ failSpeech, tidbit }) {
   return (
     <Box
       sx={{
         ...mainCardContainerSx,
-        backgroundColor: backgroundColor,
+        backgroundColor: failSpeech ? Sx.color.fail : Sx.color.success,
       }}
     >
       {/* <ColorOverlay /> */}
-      <TopCardMargin label={result} color={"#fff"} />
+      <TopCardMargin label={failSpeech ? "FAIL" : "100%"} color={"#fff"} />
       <CardContent>{tidbit}</CardContent>
       {/* <FabricOverlay /> */}
     </Box>

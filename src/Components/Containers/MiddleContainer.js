@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import { Box } from "@mui/system";
 import FlipContainer from "../Helpers/FlipContainer";
 import Logo from "../Helpers/Logo";
@@ -12,10 +12,15 @@ import IntermissionCard from "../MainCard/IntermissionCard";
 function MiddleContainer({
   game,
   card,
-  // mainContent,
   handleCompleteSpeech,
+  failSpeech,
+  currentTopic,
+  currentTidbit,
   sizeProps,
 }) {
+  // const tidbit = useMemo(() => (failSpeech ? "FAIL" : "100%"), [failSpeech]);
+  // useEffect(() => console.log("failSpeech speech changed"), [failSpeech]);
+
   const { height, width, borderRadius, wordsPositioning } = sizeProps;
 
   // const mainContent =
@@ -49,7 +54,7 @@ function MiddleContainer({
           */
           card.type === "game" ? (
             <GameCard
-              mainContent={"Game"}
+              mainContent={currentTopic}
               // mainContent={mainContent}
               timer={
                 <Timer
@@ -62,10 +67,7 @@ function MiddleContainer({
           ) : /* 
           Results Card (if card.type === "result")
           */ card.type === "result" ? (
-            <ResultsCard
-              mainContent={"result"}
-              // mainContent={mainContent}
-            />
+            <ResultsCard tidbit={currentTidbit} failSpeech={failSpeech} />
           ) : card.type === "intermission" ? (
             /* 
           Intermission Card (if card.type === "intermission")
@@ -92,5 +94,4 @@ const mainSx = {
   overflow: "hidden",
   position: "relative",
   zIndex: 2,
-  background: "red",
 };

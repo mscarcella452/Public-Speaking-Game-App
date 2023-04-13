@@ -6,7 +6,7 @@ import ShowcaseContainer from "../Components/Containers/ShowcaseContainer";
 import backgroundWords from "../Images/backgroundWords.png";
 import { mediaQueryContext } from "../Context/mediaQueryContext";
 import { screenSize } from "../Helpers/FunctionHelpers";
-import { gameContext, gameDispatchContext } from "../Context/GameStatusContext";
+import { gameContext, gameDispatchContext } from "../Context/GameContext";
 import {
   storageContext,
   storageDispatchContext,
@@ -18,7 +18,6 @@ function GamePage() {
   const gameDispatch = useContext(gameDispatchContext);
   const storage = useContext(storageContext);
   const storageDispatch = useContext(storageDispatchContext);
-  const [failSpeech, setFailSpeech] = useState(true);
   const size = useMemo(() => screenSize(screen), [screen]);
 
   return (
@@ -30,7 +29,6 @@ function GamePage() {
       }}
     >
       <TopBtnContainer sizeProps={size.header} game={game} />
-
       <ShowcaseContainer
         mainSize={size.main}
         bottomSize={size.footer}
