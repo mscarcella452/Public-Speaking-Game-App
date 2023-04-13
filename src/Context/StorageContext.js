@@ -8,7 +8,7 @@ export const intermisisonTrigger = 2;
 // localStorage.removeItem("PublicSpeakingStorage");
 
 const PublicSpeakingStorage = {
-  fullVersion: false,
+  fullVersion: true,
   topicCount: 0,
   topicIndex: [],
   failIndex: [],
@@ -39,11 +39,11 @@ const gameReducer = (storage, action) => {
     case "TOPIC_COUNT_RESET":
       return { ...storage, topicCount: 0 };
 
-    case "UPDATE_FAIL_INDEX":
-      return { ...storage, failIndex: [...action.payload] };
+    // case "UPDATE_FAIL_INDEX":
+    //   return { ...storage, failIndex: [...action.payload] };
 
-    case "UPDATE_SUCCESS_INDEX":
-      return { ...storage, successIndex: [...action.payload] };
+    // case "UPDATE_SUCCESS_INDEX":
+    //   return { ...storage, successIndex: [...action.payload] };
     case "UPDATE_TIDBIT_INDEX":
       return {
         ...storage,

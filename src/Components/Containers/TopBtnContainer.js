@@ -36,16 +36,16 @@ function TopBtnContainer({ game, load, sizeProps }) {
     function delayRules() {
       gameDispatch({ type: "TOGGLE_RULES_BTN" });
       (game.on || (!game.on && !game.rules)) &&
-        gameDispatch({ type: "TOGGLE_RULES_FLIP" });
+        gameDispatch({ type: "TOGGLE_RULES_CARD" });
       gameDispatch({ type: "TOGGLE_RULES" });
     }
 
     gameDispatch({ type: "TOGGLE_RULES_BTN" });
     if (game.on) {
-      gameDispatch({ type: "TOGGLE_RULES_FLIP" });
+      gameDispatch({ type: "TOGGLE_RULES_CARD" });
       setTimeout(() => delayRules(), 1200);
     } else {
-      game.rules && gameDispatch({ type: "TOGGLE_RULES_FLIP" });
+      game.rules && gameDispatch({ type: "TOGGLE_RULES_CARD" });
       setTimeout(() => delayRules(), 1000);
     }
   }
@@ -59,7 +59,7 @@ function TopBtnContainer({ game, load, sizeProps }) {
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
         flipProps={flipProps}
-        active={game.on && !game.rules && game.rulesFlip}
+        active={game.on && !game.rules && game.rulesCard}
         backgroundPosition={wordsPositioning.topLeftSx}
       >
         <Button sx={topBtnSx} onClick={handleQuit}>

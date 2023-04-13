@@ -38,7 +38,9 @@ function MiddleContainer({
     >
       <FlipContainer
         flipProps={{ borderRadius }}
-        active={game.on ? card.flip && game.rulesFlip : game.rulesFlip}
+        active={
+          game.on ? card.flip && game.rulesCard : game.rules && game.rulesCard
+        }
         // active={game.on ? card.flip : game.rules}
         backgroundPosition={wordsPositioning}
         Logo={<Logo />}

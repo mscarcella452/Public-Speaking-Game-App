@@ -1,23 +1,16 @@
-import { useState, useContext, useMemo, useEffect, useCallback } from "react";
-import { Paper, Box } from "@mui/material";
+import { useContext, useMemo } from "react";
+import { Paper } from "@mui/material";
 import { flexBoxSx, Sx, absolutePositionSx } from "../Styles/SXstyles";
 import TopBtnContainer from "../Components/Containers/TopBtnContainer";
 import ShowcaseContainer from "../Components/Containers/ShowcaseContainer";
 import backgroundWords from "../Images/backgroundWords.png";
 import { mediaQueryContext } from "../Context/mediaQueryContext";
 import { screenSize } from "../Helpers/FunctionHelpers";
-import { gameContext, gameDispatchContext } from "../Context/GameContext";
-import {
-  storageContext,
-  storageDispatchContext,
-} from "../Context/StorageContext";
+import { gameContext } from "../Context/GameContext";
 
 function GamePage() {
   const screen = useContext(mediaQueryContext);
   const game = useContext(gameContext);
-  const gameDispatch = useContext(gameDispatchContext);
-  const storage = useContext(storageContext);
-  const storageDispatch = useContext(storageDispatchContext);
   const size = useMemo(() => screenSize(screen), [screen]);
 
   return (

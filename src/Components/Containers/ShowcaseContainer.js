@@ -46,7 +46,8 @@ function ShowcaseContainer({ mainSize, bottomSize, game, gap }) {
 
   function generateTopic() {
     topicGenerator();
-    storageDispatch({ type: "TURN_COUNT", payload: usedTopicIndex });
+    !game.fullVersion &&
+      storageDispatch({ type: "TURN_COUNT", payload: usedTopicIndex });
   }
 
   const handleCompleteSpeech = () => endTurn(false);

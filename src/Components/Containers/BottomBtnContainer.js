@@ -44,20 +44,23 @@ function BottomBtnContainer({
     };
     if (game.on) {
       const toggleFlip = () => cardDispatch({ type: "TOGGLE_FLIP" });
+
       delay(toggleFlip, showGameCard);
     } else {
-      gameDispatch({ type: "GAME_ON" });
-      showGameCard();
+      // if game is off
+      const changeBtnTitle = () => gameDispatch({ type: "PLAY_BTN_OFF" });
+      delay(showGameCard, changeBtnTitle);
       // need better name than toggle rules flip
-      gameDispatch({ type: "TOGGLE_RULES_FLIP" });
+      gameDispatch({ type: "TOGGLE_RULES_CARD" });
+      gameDispatch({ type: "GAME_ON" });
     }
     generateTopic();
   }
   const defaultActive = useMemo(
-    () => !game.rules && game.rulesFlip && card.flip,
-    [game.rules, game.rulesFlip, card.flip]
+    () => !game.rules && game.rulesCard && card.flip,
+    [game.rules, game.rulesCard, card.flip]
   );
-
+  console.log(game);
   return (
     <Box sx={{ ...marginSx, height: height, minHeight: height }}>
       <FlipContainer
@@ -84,14 +87,12 @@ function BottomBtnContainer({
         active={
           game.on
             ? defaultActive && btn.state === "result"
-            : game.playBtn && !game.rules
+            : game.playBtn && !game.rules && game.rulesBtn
         }
         backgroundPosition={wordsPositioning.bottomRightSx}
       >
         <Button onClick={handleBtnRight} sx={bottomBtnSx}>
-          <FooterBtnText>
-            {game.on && btn.state === "result" ? "Next" : "Play"}
-          </FooterBtnText>
+          <FooterBtnText>{game.playBtn ? "Play" : "Next"}</FooterBtnText>
         </Button>
       </FlipContainer>
     </Box>

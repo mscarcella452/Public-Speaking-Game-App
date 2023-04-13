@@ -8,7 +8,7 @@ const intialValue = {
   rules: false,
   playBtn: true,
   rulesBtn: true,
-  rulesFlip: false,
+  rulesCard: false,
 };
 // const intialValue = {
 //   status: "off",
@@ -34,10 +34,15 @@ const gameReducer = (game, action) => {
       return {
         ...intialValue,
       };
-    case "TOGGLE_RULES_FLIP":
+    case "PLAY_BTN_OFF":
       return {
         ...game,
-        rulesFlip: !game.rulesFlip,
+        playBtn: false,
+      };
+    case "TOGGLE_RULES_CARD":
+      return {
+        ...game,
+        rulesCard: !game.rulesCard,
       };
     case "TOGGLE_RULES_BTN":
       return {
